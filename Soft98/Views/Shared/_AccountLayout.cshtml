@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+
+<html lang="fa">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/AccountStyle.css" />
+</head>
+<body>
+
+    <header>
+        <div class="header">
+            <a href="/" class="pull-right home">خانه</a>
+            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-search"></i></a>
+            <a href="#" class="pull-left HeaderIcon" onclick='ShowLogin()'><i class="fa fa-user-circle"></i></a>
+            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-envelope"></i></a>
+            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-bell"></i></a>
+        </div>
+    </header>
+
+    <div class="mainpage">
+        <div class="logo"><img src="~/Images/logo.png" /></div><br />
+        <div class="register col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+            <div class="registerInner">
+                <i class="pull-right fas fa-pause pause"></i><div class="textregister">عضویت</div>
+                <hr class="line" />
+
+            </div>
+        </div>
+    </div>
+    <div class="footer text-center">
+        <p>کلیه حقوق مطالب، تصاویر و طرح قالب برای سایت Soft98.iR محفوظ است</p>
+        <p>استفاده از مطالب سافت ٩٨ به هر نحو، تنها با کسب اجازه کتبی از مدیریت امکانپذیر می‌باشد</p>
+        <p>سافت ٩٨ توسط <span style="color:#d95f47;">هاست دی ال</span> و به روی سرورهای  <span style="color:#d95f47;">آسیاتکـ</span>  پشتیبانی می‌شود و دارای <span style="color:#d95f47;">ترافیک نیم بها</span> می‌باشد</p>
+
+        <div class="siteDesign">
+            <p>برنامه نویسی وبسایت و راه‌اندازی فروشگاه اینترنتی</p>
+        </div>
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header modalH">
+                    ورود به سایت
+                    <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="bodymodal" class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        function ShowLogin() {
+            $.ajax({
+                url: "/Account/Login/",
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $("#myModal").removeClass("fade");
+                $('#myModal').modal('show');
+                $('#myModalHeader').html('');
+                $('#bodymodal').html(result);
+            });
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

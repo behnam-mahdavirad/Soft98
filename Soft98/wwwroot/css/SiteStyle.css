@@ -1,0 +1,52 @@
+﻿body {
+    direction: rtl;
+    font-family: 'B Yekan', Tahoma;
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
+    box-shadow: 2px 2px #e9e5e5;
+}
+
+.HeaderIcon {
+    font-size: 22px;
+    margin-top: 10px;
+    margin-left: 30px;
+    color: black;
+}
+
+    .HeaderIcon:hover {
+        color: black;
+    }
+
+.modalH {
+    background-color: #437593;
+    color: white;
+    font-size: 20px;
+}
+
+.btn-green {
+    color: #fff;
+    background: #7bad49;
+    border-color: #7bad49;
+    font-size: 18px;
+}
+
+    .btn-green:hover {
+        color: #fff;
+        background: #68923e;
+        border-color: #62893a;
+        font-size: 18px;
+    }
+
+.textlogin {
+    color: #4fa8c4;
+    font-size: 15px;
+}
+
+    .textlogin:hover {
+        color: red !important;
+        text-decoration: none !important;
+    }
