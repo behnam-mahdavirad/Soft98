@@ -2,49 +2,76 @@
 
 <html lang="fa">
 <head>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/AccountStyle.css" />
+
+    <link href="~/lib/bootstrap/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="~/css/AccountStyle.css" rel="stylesheet" />
+
 </head>
 <body>
 
     <header>
         <div class="header">
+
             <a href="/" class="pull-right home">خانه</a>
-            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-search"></i></a>
-            <a href="#" class="pull-left HeaderIcon" onclick='ShowLogin()'><i class="fa fa-user-circle"></i></a>
-            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-envelope"></i></a>
-            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-bell"></i></a>
+
+            <a href="#" class="pull-left headerIcon"><i class="fa fa-search"></i></a>
+
+            @{
+                if (User.Identity.IsAuthenticated)
+                {
+                    <div class="dropdown pull-left">
+
+                        <a href="#" class="pull-left headerIconLogin"><i class="fa fa-user-circle"></i></a>
+                        <a href="#" class="pull-left arrow-header"><i class="fas fa-sort-down"></i></a>
+
+                        <div class="submenu">
+                            <p class="welcome">خوش آمدید</p>
+                            <a href="/Account/Profile">پروفایل<i class="fas fa-caret-left" style="padding:5px; float:right"></i></a>
+                            <a href="/Account/SignOut" class="exit">خروج از سایت</a>
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+                    <a href="#" class="pull-left headerIcon" onclick='ShowLogin()'><i class="fa fa-user-circle"></i></a>
+                }
+            }
+
+
+
+            <a href="#" class="pull-left headerIcon"><i class="far fa-envelope"></i></a>
+
+            <a href="#" class="pull-left headerIcon"><i class="fa fa-bell"></i></a>
+
         </div>
     </header>
-
-    <div class="mainpage">
-        <div class="logo"><img src="~/Images/logo.png" /></div><br />
-        <div class="register col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-            <div class="registerInner">
-                <i class="pull-right fas fa-pause pause"></i><div class="textregister">عضویت</div>
-                <hr class="line" />
-
-            </div>
-        </div>
-    </div>
-    <div class="footer text-center">
-        <p>کلیه حقوق مطالب، تصاویر و طرح قالب برای سایت Soft98.iR محفوظ است</p>
-        <p>استفاده از مطالب سافت ٩٨ به هر نحو، تنها با کسب اجازه کتبی از مدیریت امکانپذیر می‌باشد</p>
-        <p>سافت ٩٨ توسط <span style="color:#d95f47;">هاست دی ال</span> و به روی سرورهای  <span style="color:#d95f47;">آسیاتکـ</span>  پشتیبانی می‌شود و دارای <span style="color:#d95f47;">ترافیک نیم بها</span> می‌باشد</p>
-
-        <div class="siteDesign">
-            <p>برنامه نویسی وبسایت و راه‌اندازی فروشگاه اینترنتی</p>
-        </div>
-    </div>
 
     <div>
         @RenderBody()
     </div>
+
+
+
+
+    <div class="footer text-center">
+        <p>کلیه حقوق، مطالب، تصاویر و طرح قالب برای سایت soft98.ir محفوظ است</p>
+        <p>استفاده از مطالب سافت 98 به هر نحو، تنها با اجازه کتبی از مدیریت امکانپذیر می باشد</p>
+        <p>سافت 98توسط <span style="color:#d95f47"> هاست دی ال </span> و به روی سرورهای قدرتمند <span style="color:#d95f47">آسیاتک</span>پشتیبانی می شود </p>
+
+        <div class="siteDesign">
+            برنامه نویسی و طراحی وبسایت توسط
+        </div>
+    </div>
+
+
 
     <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -63,9 +90,9 @@
     </div>
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jQuery/jquery-1.10.2.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap-rtl.min.js"></script>
+
 
     <script>
         function ShowLogin() {
@@ -74,7 +101,6 @@
                 type: "Get",
                 data: {}
             }).done(function (result) {
-                $("#myModal").removeClass("fade");
                 $('#myModal').modal('show');
                 $('#myModalHeader').html('');
                 $('#bodymodal').html(result);
@@ -82,7 +108,6 @@
         }
     </script>
 
-    @RenderSection("Scripts", required: false)
+
 </body>
 </html>
-

@@ -4,18 +4,22 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Soft98</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+
+    <title>@ViewBag.Title</title>
+
+
+    <link href="~/lib/bootstrap/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/SiteStyle.css" />
+
 </head>
 <body>
     <header>
         <div class="header">
-            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-search"></i></a>
-            <a href="#" class="pull-left HeaderIcon" onclick='ShowLogin()'><i class="fa fa-user-circle"></i></a>
-            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-envelope"></i></a>
-            <a href="#" class="pull-left HeaderIcon"><i class="fa fa-bell"></i></a>
+            <a href="#" class="pull-left headerIcon"><i class="fa fa-search"></i></a>
+            <a href="#" class="pull-left headerIcon" onclick='ShowLogin()'><i class="fa fa-user-circle"></i></a>
+            <a href="#" class="pull-left headerIcon"><i class="far fa-envelope"></i></a>
+            <a href="#" class="pull-left headerIcon"><i class="fa fa-bell"></i></a>
         </div>
     </header>
 
@@ -39,10 +43,8 @@
         </div>
     </div>
 
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jQuery/jquery-1.10.2.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap-rtl.min.js"></script>
 
     <script>
         function ShowLogin() {
@@ -51,14 +53,12 @@
                 type: "Get",
                 data: {}
             }).done(function (result) {
-                $("#myModal").removeClass("fade");
                 $('#myModal').modal('show');
-                $('#myModalHeader').html('');
+                $('#myModalHeader').html('  ');
                 $('#bodymodal').html(result);
             });
         }
     </script>
 
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

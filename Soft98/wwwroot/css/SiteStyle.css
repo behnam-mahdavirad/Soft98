@@ -10,14 +10,14 @@
     box-shadow: 2px 2px #e9e5e5;
 }
 
-.HeaderIcon {
+.headerIcon {
     font-size: 22px;
     margin-top: 10px;
     margin-left: 30px;
     color: black;
 }
 
-    .HeaderIcon:hover {
+    .headerIcon:hover {
         color: black;
     }
 

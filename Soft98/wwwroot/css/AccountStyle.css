@@ -1,6 +1,6 @@
 ﻿body {
     direction: rtl;
-    font-family: 'B Yekan', Tahoma;
+    font-family: 'B Yekan',Tahoma;
 }
 
 .header {
@@ -10,14 +10,14 @@
     box-shadow: 2px 2px #e9e5e5;
 }
 
-.HeaderIcon {
+.headerIcon {
     font-size: 22px;
     margin-top: 10px;
-    margin-left: 30px;
+    margin-left: 20px;
     color: black;
 }
 
-    .HeaderIcon:hover {
+    .headerIcon:hover {
         color: black;
     }
 
@@ -28,16 +28,14 @@
 }
 
 .btn-green {
-    color: #fff;
-    background: #7bad49;
-    border-color: #7bad49;
+    background-color: #7bad49;
+    color: white;
     font-size: 18px;
 }
 
     .btn-green:hover {
-        color: #fff;
-        background: #68923e;
-        border-color: #62893a;
+        background-color: green;
+        color: white;
         font-size: 18px;
     }
 
@@ -47,9 +45,10 @@
 }
 
     .textlogin:hover {
-        color: red !important;
-        text-decoration: none !important;
+        color: red;
+        text-decoration: none;
     }
+
 
 .home {
     color: black;
@@ -68,29 +67,27 @@
 
 .mainpage {
     width: 100%;
-    height: auto;
+    height: 700px;
     background-color: #437593;
-    padding-bottom: 60px;
 }
 
 .logo {
-    padding:30px;
+    margin: 30px;
 }
 
 .register {
     height: 500px;
     background-color: #e8e8e8;
     border-radius: 5px;
-    width: 82%;
-    margin: auto;
-    padding: 25px;
 }
 
 .registerInner {
-    height: 100%;
+    width: 98%;
+    height: 90%;
     background-color: white;
     border-radius: 5px;
     margin: auto;
+    margin-top: 2.5%;
     border: 1px solid darkgray;
 }
 
@@ -112,15 +109,17 @@
 }
 
 .footer {
+    width: 100%;
+    height: 200px;
     background-color: #313a3f;
     color: white;
     font-size: 18px;
-    padding-top: 20px;
+    padding: 20px;
 }
 
 .siteDesign {
-    width: 350px;
-    height: 30px;
+    width: 300px;
+    height: 50px;
     background-color: #2b3337;
     padding: 10px;
     margin: auto;
@@ -129,3 +128,106 @@
     .siteDesign:hover {
         background-color: #d95f47;
     }
+
+.registerStyle {
+    float: right;
+    margin: 3% 5%;
+    width: 40%;
+}
+
+.captchaStyle {
+    float: right;
+    margin: 3% 5%;
+    width: 10%;
+}
+
+@media screen and (max-width:758px) {
+    .captchaStyle {
+        transform: scale(0.65);
+        margin: 3% 3%;
+    }
+}
+
+
+.arrow-header {
+    color: #7bad49;
+    font-size: 20px;
+    margin-top: 32px;
+    margin-left: -32px;
+}
+
+.headerIconLogin {
+    font-size: 22px;
+    margin-top: 10px;
+    margin-left: 20px;
+    color: black;
+    padding: 5px 15px;
+}
+
+    .headerIconLogin:hover {
+        color: white;
+        text-decoration: none;
+        background-color: #7bad49;
+        border-radius: 5px;
+    }
+
+        .headerIconLogin:hover ~ .arrow-header {
+            font-size: 30px;
+            margin-top: 30px;
+            margin-left: -35px;
+            transition: 0.2s;
+            color: #7bad49;
+        }
+
+.submenu {
+    display: none;
+    position: absolute;
+    left: 0px;
+    background-color: #f5f5f5;
+    width: 200px;
+    height: auto;
+    z-index: 1;
+    margin-top: 60px;
+    margin-left: 20px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 2px 2px #e9e5e5;
+}
+
+    .submenu a {
+        float: right;
+        color: #1d1b1b;
+        text-decoration: none;
+        padding: 5px;
+        width: 100%;
+        display: block;
+        font-size: 14px;
+    }
+
+        .submenu a:hover {
+            background-color: #ebebeb;
+        }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+    .dropdown:hover .submenu {
+        display: block;
+    }
+
+.headerIconLogin:focus ~ .submenu {
+    display: block;
+}
+
+.welcome {
+    color: #7bad49;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.exit {
+    border-top: 1px solid darkgray;
+    color: #f82929 !important;
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using reCAPTCHA.AspNetCore;
 using Soft98.Core.Classes;
 using Soft98.Core.Interfaces;
 using Soft98.Core.ViewModels;
@@ -14,10 +15,12 @@ namespace Soft98.Controllers
     public class AccountController : Controller
     {
         private IUser _iuser;
+        private readonly IRecaptchaService _recaptcha;
 
-        public AccountController(IUser iuser)
+        public AccountController(IUser iuser, IRecaptchaService recaptcha)
         {
             _iuser = iuser;
+            _recaptcha = recaptcha;
         } // end constructor AccountController
 
         public IActionResult Register()
@@ -26,29 +29,38 @@ namespace Soft98.Controllers
         } // end IActionResult Register
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel register)
+        public async Task<IActionResult> Register(RegisterViewModel register)
         {
             if (ModelState.IsValid)
             {
-                if (_iuser.IsMobileNumberExists(register.Mobile))
+                var recaptcha = await _recaptcha.Validate(Request);
+                if (!recaptcha.success)
                 {
-                    ModelState.AddModelError("Mobile", "شما قبلا ثبت نام کرده اید");
-                    return RedirectToAction("Login");
+                    ModelState.AddModelError("Mobile", "لطفا تیک را بزنید");
+                    return View(register);
                 }
                 else
                 {
-                    User user = new User()
+                    if (_iuser.IsMobileNumberExists(register.Mobile))
                     {
-                        IsActive = false,
-                        Mobile = register.Mobile,
-                        Code = CodeGenerator.ActiveCode(),
-                        Password = HashGenerator.EncodingPassWithMd5(register.Password),
-                        IdRole = 2
-                    };
+                        ModelState.AddModelError("Mobile", "شما قبلا ثبت نام کرده اید");
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        User user = new User()
+                        {
+                            IsActive = false,
+                            Mobile = register.Mobile,
+                            Code = CodeGenerator.ActiveCode(),
+                            Password = HashGenerator.EncodingPassWithMd5(register.Password),
+                            IdRole = 2 // User
+                        };
 
-                    _iuser.AddUser(user);
+                        _iuser.AddUser(user);
 
-                    return RedirectToAction("Active");
+                        return RedirectToAction("Active");
+                    }
                 }
             }
             else

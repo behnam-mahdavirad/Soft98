@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using reCAPTCHA.AspNetCore;
 using Soft98.Core.Interfaces;
 using Soft98.Core.Services;
 using Soft98.DataAccessLayer.Context;
@@ -32,6 +33,9 @@ namespace Soft98
                     );
 
             services.AddTransient<IUser, UserService>();
+
+            services.Configure<RecaptchaSettings>(Configuration.GetSection("RecaptchaSettings"));
+            services.AddTransient<IRecaptchaService, RecaptchaService>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             //services.AddMvc(option => option.EnableEndpointRouting = false);
