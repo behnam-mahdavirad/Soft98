@@ -12,6 +12,12 @@ namespace Soft98.Core.Interfaces
         bool IsMobileNumberExists(string mobileNumber);
 
         int AddUser(User user);
+
+        bool ActiveUser(string activeCode);
+
+        User ForgetPassword(string mobileNumber);
+
+        bool ResetPassword(string activeCode, string password);
     } // end public interface IUser
 
 } // end namespace Soft98.Core.Interfaces

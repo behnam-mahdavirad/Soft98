@@ -1,0 +1,30 @@
+﻿@model Soft98.Core.ViewModels.ForgetViewModel
+
+@{
+    ViewData["Title"] = "Forget";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+
+<div class="mainpage">
+    <div class="logo pull-right "><img src="~/Images/logo.png" /></div><br />
+    <div class="register col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+        <div class="registerInner">
+            <i class="pull-right fas fa-pause pause"></i><div class="textregister">بازیابی</div>
+            <hr class="line" />
+
+            <form asp-action="Forget" class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group registerStyle">
+                    <label asp-for="Mobile" class="control-label"></label>
+                    <input asp-for="Mobile" class="form-control" />
+                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="بازیابی کلمه عبور" class="btn btn-block btn-green" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

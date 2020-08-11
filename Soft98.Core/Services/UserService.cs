@@ -18,12 +18,33 @@ namespace Soft98.Core.Services
             _context = context;
         } // end constructor UserService
 
+        public bool ActiveUser(string activeCode)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.IsActive == false && u.Code == activeCode);
+            if (user != null)
+            {
+                user.Code = CodeGenerator.ActiveCode();
+                user.IsActive = true;
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public int AddUser(User user)
         {
             _context.Users.Add(user);
             _context.SaveChanges();
             return user.UserId;
         } // end method AddUser
+
+        public User ForgetPassword(string mobileNumber)
+        {
+            return _context.Users.FirstOrDefault(u => u.Mobile == mobileNumber);
+        }
 
         public bool IsMobileNumberExists(string mobileNumber)
         {
@@ -37,6 +58,23 @@ namespace Soft98.Core.Services
             return _context.Users.FirstOrDefault(u => u.Mobile == mobileNumber && u.Password == hashPassword);
         } // end method LoginUser
 
+        public bool ResetPassword(string activeCode, string password)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Code == activeCode && u.IsActive == true);
+
+            if (user != null)
+            {
+                string hashpassword = HashGenerator.EncodingPassWithMd5(password);
+                user.Password = hashpassword;
+                user.Code = CodeGenerator.ActiveCode();
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     } // end public class UserService
 
 } // end namespace Soft98.Core.Services

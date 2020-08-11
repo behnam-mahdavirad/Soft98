@@ -25,6 +25,8 @@ namespace Soft98.Controllers
 
         public IActionResult Register()
         {
+            ViewBag.Myst = 0;
+            ViewBag.ModalTitle = "";
             return View();
         } // end IActionResult Register
 
@@ -37,6 +39,7 @@ namespace Soft98.Controllers
                 if (!recaptcha.success)
                 {
                     ModelState.AddModelError("Mobile", "لطفا تیک را بزنید");
+                    ViewBag.Myst = 0;
                     return View(register);
                 }
                 else
@@ -44,7 +47,10 @@ namespace Soft98.Controllers
                     if (_iuser.IsMobileNumberExists(register.Mobile))
                     {
                         ModelState.AddModelError("Mobile", "شما قبلا ثبت نام کرده اید");
-                        return RedirectToAction("Login");
+                        //return RedirectToAction("Login");
+                        ViewBag.Myst = 1;
+                        ViewBag.ModalTitle = "ورود به سایت";
+                        return View();
                     }
                     else
                     {
@@ -59,7 +65,14 @@ namespace Soft98.Controllers
 
                         _iuser.AddUser(user);
 
-                        return RedirectToAction("Active");
+                        SMS sms = new SMS();
+                        sms.Send(user.Mobile, "ثبت نام شما انجام شد، کد فعالسازی : " + user.Code);
+
+                        //return RedirectToAction("Active");
+                        ViewBag.Myst = 2;
+                        ViewBag.ModalTitle = "فعالسازی حساب کاربری";
+                        return View();
+
                     }
                 }
             }
@@ -106,6 +119,88 @@ namespace Soft98.Controllers
 
         } // end IActionResult Login
 
+        public IActionResult Active()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Active(ActiveViewModel active)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_iuser.ActiveUser(active.Code))
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("Code", "کد فعالسازی صحیح نمی باشد");
+                    return View(active);
+                }
+            }
+            else
+            {
+                return View(active);
+            }
+        }
+
+        public IActionResult Forget()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Forget(ForgetViewModel forget) 
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _iuser.ForgetPassword(forget.Mobile);
+
+                if (user != null)
+                {
+                    SMS sms = new SMS();
+                    sms.Send(forget.Mobile, "کد تایید برای فراموشی کلمه عبور " + user.Code + "می باشد");
+                    return RedirectToAction("Reset");
+                }
+
+                else
+                {
+                    ModelState.AddModelError("Mobile", "این شماره موبایل هنوز ثبت نام نشده است");
+                    return View(forget);
+                }
+            }
+            else
+            {
+                return View(forget);
+            }
+        }
+
+        public IActionResult Reset()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Reset(ResetViewModel reset)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_iuser.ResetPassword(reset.Code, reset.Password))
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("Code", "کد وارد شده صحیح نمی باشد");
+                    return View(reset);
+                }
+            }
+            else
+            {
+                return View(reset);
+            }
+        }
     } // end public class AccountController : Controller
 
 } // end namespace Soft98.Controllers
