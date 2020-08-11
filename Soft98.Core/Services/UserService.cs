@@ -18,7 +18,7 @@ namespace Soft98.Core.Services
             _context = context;
         } // end constructor UserService
 
-        public bool ActiveUser(string activeCode)
+        public User ActiveUser(string activeCode)
         {
             var user = _context.Users.FirstOrDefault(u => u.IsActive == false && u.Code == activeCode);
             if (user != null)
@@ -26,12 +26,8 @@ namespace Soft98.Core.Services
                 user.Code = CodeGenerator.ActiveCode();
                 user.IsActive = true;
                 _context.SaveChanges();
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            return user;
         }
 
         public int AddUser(User user)

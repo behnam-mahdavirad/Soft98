@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using reCAPTCHA.AspNetCore;
 using Soft98.Core.Classes;
@@ -98,7 +101,15 @@ namespace Soft98.Controllers
                 {
                     if (user.IsActive)
                     {
+                        var Claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                            new Claim(ClaimTypes.Name, user.Mobile)
+                        };
+                        var identity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principle = new ClaimsPrincipal(identity);
 
+                        HttpContext.SignInAsync(principle);
                     }
                     else
                     {
@@ -129,9 +140,19 @@ namespace Soft98.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_iuser.ActiveUser(active.Code))
+                User user = _iuser.ActiveUser(active.Code);
+
+                if (user != null)
                 {
-                    return RedirectToAction("Login");
+                    var Claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                            new Claim(ClaimTypes.Name, user.Mobile)
+                        };
+                    var identity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principle = new ClaimsPrincipal(identity);
+
+                    return View();
                 }
                 else
                 {
@@ -151,7 +172,7 @@ namespace Soft98.Controllers
         }
 
         [HttpPost]
-        public IActionResult Forget(ForgetViewModel forget) 
+        public IActionResult Forget(ForgetViewModel forget)
         {
             if (ModelState.IsValid)
             {
@@ -178,6 +199,8 @@ namespace Soft98.Controllers
 
         public IActionResult Reset()
         {
+            ViewBag.Myst = 0;
+            ViewBag.ModalTitle = "";
             return View();
         }
 
@@ -188,10 +211,15 @@ namespace Soft98.Controllers
             {
                 if (_iuser.ResetPassword(reset.Code, reset.Password))
                 {
-                    return RedirectToAction("Login");
+                    ViewBag.Myst = 1;
+                    ViewBag.ModalTitle = "ورود به سایت";
+                    return View();
                 }
                 else
                 {
+                    ViewBag.Myst = 0;
+                    ViewBag.ModalTitle = "";
+
                     ModelState.AddModelError("Code", "کد وارد شده صحیح نمی باشد");
                     return View(reset);
                 }
@@ -201,6 +229,13 @@ namespace Soft98.Controllers
                 return View(reset);
             }
         }
+
+        public IActionResult SignOut()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Redirect("/Home/Index"); 
+        }
+
     } // end public class AccountController : Controller
 
 } // end namespace Soft98.Controllers

@@ -13,7 +13,7 @@ namespace Soft98.Core.Interfaces
 
         int AddUser(User user);
 
-        bool ActiveUser(string activeCode);
+        User ActiveUser(string activeCode);
 
         User ForgetPassword(string mobileNumber);
 

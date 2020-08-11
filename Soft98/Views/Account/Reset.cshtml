@@ -3,6 +3,17 @@
 @{
     ViewData["Title"] = "Reset";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
+
+    int? mystatus = ViewBag.Myst;
+
+    if (mystatus == 1)
+    {
+        <script>
+            window.onload = function () {
+                ShowLogin();
+            }
+        </script>
+    }
 }
 
 <div class="mainpage">
@@ -36,3 +47,33 @@
         </div>
     </div>
 </div>
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modalH">
+                <h4 class="modal-title">@ViewBag.ModalTitle</h4>
+                <button type="button" class="close" style="color:white;" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="bodymodal" class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ShowLogin() {
+        $.ajax({
+            url: "/Account/Login/",
+            type: "Get",
+            data: {}
+        }).done(function (result) {
+            $('#myModal').modal('show');
+            $('#myModalHeader').html('');
+            $('#bodymodal').html(result);
+        });
+    }
+</script>
